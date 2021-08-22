@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.devMode" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="index">
+            <result>/index.jsp</result>
+        </action>
+        <action name="insert" class="org.apache.struts.employee.action.RegisterAction" method="execute">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="update" class="org.apache.struts.employee.action.UpdateAction" method="execute">
+            <result name="success">/index.jsp</result>
+        </action>
+    </package>
+    
+    <package name="search"  extends="json-default">
+    	<interceptors>
+	        <interceptor-stack name="jsonStack">
+	            <interceptor-ref name="json">
+	                <param name="enableSMD">true</param>
+	                <param name="excludeProperties">
+    					param
+  					</param>
+	            </interceptor-ref>
+	        </interceptor-stack>
+	    </interceptors>  
+     	<action name="search" class="org.apache.struts.employee.action.SearchAction">
+     		<interceptor-ref name="jsonStack"></interceptor-ref>
+        	<result type="json">
+        		<param name="excludeProperties">
+					param
+  				</param>
+  			</result>
+    	 </action> 
+    	 <action name="editData" class="org.apache.struts.employee.action.GetUpdateAction">
+     		<interceptor-ref name="jsonStack"></interceptor-ref>
+        	<result type="json" />	
+    	 </action> 
+    	 <action name="delete" class="org.apache.struts.employee.action.DeleteAction">
+        	<result type="json" />
+    	 </action>    	 
+  	</package>
+</struts>
